@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:to_do_list/widgets/Constant.dart';
 
 class CustomTextFiled extends StatefulWidget {
-  CustomTextFiled({this.hintText, this.onChanged});
+  CustomTextFiled({this.hintText, this.onChanged,this.onSaved});
   
   final Function(String)? onChanged;
   final String? hintText;
+void Function(String?)? onSaved;
 
   @override
   State<CustomTextFiled> createState() => _CustomTextFiledState();
@@ -13,14 +14,15 @@ class CustomTextFiled extends StatefulWidget {
 
 class _CustomTextFiledState extends State<CustomTextFiled> {
   bool isObscure = true; // القيمة الأولية للحقل تكون مخفية
-
+void Function(String?)? onSaved;
   @override
   Widget build(BuildContext context) {
     bool isPasswordField = widget.hintText == 'Enter password' || widget.hintText == 'Confirm password';
 
     return TextFormField(
+      onSaved: onSaved,
       validator: (data) {
-        if (data == null || data.isEmpty) {
+        if (data?.isEmpty ?? true) {
           return 'Field is required';
         }
         return null; // إرجاع null يعني أنه لا يوجد خطأ في التحقق
