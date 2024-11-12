@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list/widgets/Constant.dart';
 import 'package:to_do_list/widgets/add_buttom_sheet.dart'; // تأكد من استيراد الملف بشكل صحيح
 
 class ListNodesBody extends StatefulWidget {
@@ -22,6 +23,7 @@ class _ListNodesBodyState extends State<ListNodesBody> {
           borderRadius: BorderRadius.circular(8.0), // شكل الحواف المستديرة
         ),
         child: Container(
+          margin: EdgeInsets.only(left: 5),
           width: 380,
           height: 180,
           decoration: BoxDecoration(
@@ -48,7 +50,7 @@ class _ListNodesBodyState extends State<ListNodesBody> {
                         shape: BoxShape.circle,
                         color: Colors.white,
                         border: Border.all(
-                          color: Color(0xff2EA8A1),
+                          color: kPrimaryColor,
                           width: 2.0,
                         ),
                       ),
@@ -70,7 +72,7 @@ class _ListNodesBodyState extends State<ListNodesBody> {
                           },
                           icon: Icon(
                             Icons.add,
-                            color: Color(0xff2EA8A1),
+                            color: kPrimaryColor,
                           ),
                         ),
                       ),

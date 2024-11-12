@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_analog_clock/flutter_analog_clock.dart';
+import 'package:to_do_list/widgets/Constant.dart';
 
 class AnalogClockDemo extends StatelessWidget {
   const AnalogClockDemo({super.key});
@@ -31,14 +32,14 @@ class AnalogClockDemo extends StatelessWidget {
               dateTime: DateTime.now(),
               isKeepTime: true,
               dialColor: Colors.white, // تغيير لون قرص الساعة
-              hourNumberColor: Color(0xFF2EA8A1), // تغيير لون الأرقام
-              centerPointColor: Color(0xFF2EA8A1), // تغيير لون النقطة في المركز
+              hourNumberColor: kPrimaryColor, // تغيير لون الأرقام
+              centerPointColor: kPrimaryColor, // تغيير لون النقطة في المركز
               markingColor: Colors.white, // تغيير لون النقاط الصغيرة إلى اللون الأبيض
               hourNumbers: [
                 '12', '', '', '3', '', '', '6', '', '', '9', '', '', // وضع الأرقام 12، 3، 6، 9 فقط
               ],
-              hourHandColor: Color(0xFF2EA8A1), // تغيير لون عقرب الساعة
-              minuteHandColor: Color(0xFF2EA8A1), // تغيير لون عقرب الدقائق
+              hourHandColor: kPrimaryColor, // تغيير لون عقرب الساعة
+              minuteHandColor: kPrimaryColor, // تغيير لون عقرب الدقائق
               secondHandColor:  Color.fromARGB(255, 191, 138, 138), // تغيير لون عقرب الثواني
               child: const Align(
                 alignment: FractionalOffset(0.5, 0.75),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_list/views/list_nodes_body.dart';
+import 'package:to_do_list/widgets/Constant.dart';
 import 'package:to_do_list/widgets/custom_analog_clock.dart';
 
 class ListNotes extends StatelessWidget {
@@ -25,7 +26,7 @@ class ListNotes extends StatelessWidget {
                       width: 190,
                       height: 190,
                       decoration: BoxDecoration(
-                        color: Color(0xff9CD8D2).withOpacity(0.7),
+                        color: kColortext.withOpacity(0.7),
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -37,7 +38,7 @@ class ListNotes extends StatelessWidget {
                       width: 190,
                       height: 190,
                       decoration: BoxDecoration(
-                        color: Color(0xff9CD8D2).withOpacity(0.7),
+                        color: kColortext.withOpacity(0.7),
                         shape: BoxShape.circle,
                       ),
                     ),

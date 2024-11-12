@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list/widgets/Constant.dart';
+import 'package:to_do_list/widgets/custom_text_filed.dart';
 
 class ShowTaskButtomSheet extends StatelessWidget {
   const ShowTaskButtomSheet({super.key});
@@ -8,7 +10,7 @@ class ShowTaskButtomSheet extends StatelessWidget {
     TextEditingController _controller = TextEditingController();
 return Scaffold(
       body: Container(
-        color: Color(0xffFEF7F7),
+        color:kPrimarybacground,
         child: Center(
           child: Stack(
             children: [
@@ -19,7 +21,7 @@ return Scaffold(
                   width: 190,
                   height: 190,
                   decoration: BoxDecoration(
-                    color: Color(0xff9CD8D2).withOpacity(0.7),
+                    color: kColortext.withOpacity(0.7),
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -31,7 +33,7 @@ return Scaffold(
                   width: 190,
                   height: 190,
                   decoration: BoxDecoration(
-                    color: Color(0xff9CD8D2).withOpacity(0.7),
+                    color: kColortext.withOpacity(0.7),
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -46,7 +48,7 @@ return Scaffold(
                   Container(
         height: 300,
         decoration: BoxDecoration(
-          color: Color(0xffFEF7F7),
+          color: kPrimarybacground,
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -56,13 +58,8 @@ return Scaffold(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 SizedBox(height: 80),
-                TextField(
-                  controller: _controller,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(0.4)
-                    ),
-                  ),
+                CustomTextFiled(
+                  hintText: 'Enter your task',
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
@@ -79,7 +76,8 @@ return Scaffold(
                     }
                   },
                   child: Text('Add Task',
-                      style: TextStyle(color: Color(0xff2EA8A1))),
+                      style: TextStyle(color: kPrimaryColor)),
+
                 ),
               ],
             ),

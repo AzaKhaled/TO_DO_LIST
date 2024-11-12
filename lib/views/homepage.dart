@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_list/views/registerpage.dart';
+import 'package:to_do_list/widgets/Constant.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -8,7 +9,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color(0xffFEF7F7),
+        color: kPrimarybacground,
         child: Center(
           child: Stack(
             children: [
@@ -19,7 +20,7 @@ class HomePage extends StatelessWidget {
                   width: 190,
                   height: 190,
                   decoration: BoxDecoration(
-                    color: Color(0xff9CD8D2).withOpacity(0.7),
+                    color: kColortext.withOpacity(0.7),
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -31,7 +32,7 @@ class HomePage extends StatelessWidget {
                   width: 190,
                   height: 190,
                   decoration: BoxDecoration(
-                    color: Color(0xff9CD8D2).withOpacity(0.7),
+                    color: kColortext.withOpacity(0.7),
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -82,9 +83,10 @@ class HomePage extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => Registerpage()));
+                         // Navigator.pushNamed(context, 'LoginPage');
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xff2EA8A1),
+                          backgroundColor: kPrimaryColor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -98,9 +100,8 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                     SizedBox(height: 50),
+                    SizedBox(height: 50),
                   ],
-                 
                 ),
               ),
             ],

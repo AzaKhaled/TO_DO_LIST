@@ -4,6 +4,7 @@ import 'package:to_do_list/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:to_do_list/views/homepage.dart';
 import 'package:to_do_list/views/list_notes.dart';
+import 'package:to_do_list/views/loginpage.dart';
 import 'package:to_do_list/views/registerpage.dart';
 import 'firebase_options.dart';
 
@@ -22,6 +23,7 @@ class ToDoList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+     
       debugShowCheckedModeBanner: false,
       home: HomePage(),
     );
