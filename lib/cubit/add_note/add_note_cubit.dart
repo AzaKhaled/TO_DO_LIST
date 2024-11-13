@@ -8,16 +8,19 @@ part 'add_note_state.dart';
 
 class AddNoteCubit extends Cubit<AddNoteState> {
   AddNoteCubit() : super(AddNoteInitial());
-  bool isLoading = false;
 
-  addNote(NoteModel text) async {
-    emit(AddNoteLoading());
+  // دالة لإضافة ملاحظة جديدة
+  Future<void> addNote(NoteModel text) async {
+    emit(AddNoteLoading()); // حالة التحميل أثناء إضافة الملاحظة
     try {
       var notesbox = Hive.box<NoteModel>(kNotesBox);
+
+      await notesbox.add(text); // إضافة الملاحظة إلى Hive
+
+      // بعد إضافة الملاحظة بنجاح، نقوم بإرسال الحالة المحدثة
       emit(AddNoteSucces());
-      await notesbox.add(text);
     } catch (e) {
-      AddNoteFailure(e.toString());
+      emit(AddNoteFailure(e.toString())); // حالة فشل إذا حدث خطأ
     }
   }
 }

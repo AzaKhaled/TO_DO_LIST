@@ -21,8 +21,9 @@ void main() async {
   );
   Bloc.observer = SimpleBlocObsevier();
   await Hive.initFlutter();
-  await Hive.openBox(kNotesBox);
-  Hive.registerAdapter(NoteModelAdapter());
+    Hive.registerAdapter(NoteModelAdapter());
+
+  await Hive.openBox<NoteModel>(kNotesBox);
   runApp(ToDoList());
 }
 
@@ -31,14 +32,9 @@ class ToDoList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => AddNoteCubit()),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: HomePage(),
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: HomePage(),
     );
   }
 }

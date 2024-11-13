@@ -9,6 +9,7 @@ import 'package:to_do_list/widgets/custom_text_filed.dart';
 
 class ShowTaskButtomSheet extends StatelessWidget {
   const ShowTaskButtomSheet({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,37 +47,35 @@ class ShowTaskButtomSheet extends StatelessWidget {
                 left: 20,
                 right: 20,
                 child: Column(
-                    // crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 300,
-                        decoration: BoxDecoration(
-                          color: kPrimarybacground,
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: SingleChildScrollView(
-                            child: BlocConsumer<AddNoteCubit, AddNoteState>(
-                              listener: (context, state) {
-                                if (state is AddNoteFailure) {
-                                  print('error faild');
-                                }
-                                if (state is AddNoteSucces) {
-                                  Navigator.pop(context);
-                                }
-                              },
-                              builder: (context, state) {
-                                return ModalProgressHUD(
-                                  inAsyncCall:
-                                      state is AddNoteLoading ? true : false,
-                                  child:const AddNoteForm(),
-                                );
-                              },
-                            ),
-                          ),
+                  children: [
+                    Container(
+                      height: 300,
+                      decoration: BoxDecoration(
+                        color: kPrimarybacground,
+                      ),
+                      child: BlocProvider(
+                        create: (context) => AddNoteCubit(),
+                        child: BlocConsumer<AddNoteCubit, AddNoteState>(
+                          listener: (context, state) {
+                            if (state is AddNoteFailure) {
+                              print('error faild');
+                            }
+                            if (state is AddNoteSucces) {
+                              Navigator.pop(context); 
+                               // إغلاق الـ BottomSheet بعد إضافة المهمة
+                            }
+                          },
+                          builder: (context, state) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              child: const SingleChildScrollView(child: AddNoteForm()),
+                            );
+                          },
                         ),
                       ),
-                    ]),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
