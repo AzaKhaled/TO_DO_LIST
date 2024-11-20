@@ -85,7 +85,7 @@ class HomePage extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>Loginpage()));
+                                  builder: (context) =>Registerpage()));
                          // Navigator.pushNamed(context, 'LoginPage');
                         },
                         style: ElevatedButton.styleFrom(

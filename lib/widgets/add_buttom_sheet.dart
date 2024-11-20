@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:to_do_list/cubit/add_note/add_note_cubit.dart';
 import 'package:to_do_list/widgets/Constant.dart';
 import 'package:to_do_list/widgets/add_note_form_state.dart';
 import 'package:to_do_list/widgets/custom_buttom.dart';
@@ -53,25 +52,9 @@ class ShowTaskButtomSheet extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: kPrimarybacground,
                       ),
-                      child: BlocProvider(
-                        create: (context) => AddNoteCubit(),
-                        child: BlocConsumer<AddNoteCubit, AddNoteState>(
-                          listener: (context, state) {
-                            if (state is AddNoteFailure) {
-                              print('error faild');
-                            }
-                            if (state is AddNoteSucces) {
-                              Navigator.pop(context); 
-                               // إغلاق الـ BottomSheet بعد إضافة المهمة
-                            }
-                          },
-                          builder: (context, state) {
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
-                              child: const SingleChildScrollView(child: AddNoteForm()),
-                            );
-                          },
-                        ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: const SingleChildScrollView(child: AddNoteForm()),
                       ),
                     ),
                   ],

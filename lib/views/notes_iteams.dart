@@ -1,11 +1,16 @@
+import 'dart:ffi';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:to_do_list/models/note_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:to_do_list/model/todo_model.dart';
+import 'package:to_do_list/services/database_service.dart';
+
 import 'package:to_do_list/widgets/Constant.dart';
 
 class NotesIteams extends StatefulWidget {
-  final NoteModel notes;
-
-  const NotesIteams({super.key, required this.notes});
+  const NotesIteams({super.key});
 
   @override
   State<NotesIteams> createState() => _NotesIteamsState();
@@ -13,40 +18,63 @@ class NotesIteams extends StatefulWidget {
 
 class _NotesIteamsState extends State<NotesIteams> {
   bool _isChecked = false;
+  User? user = FirebaseAuth.instance.currentUser;
+  late String uid;
+  final DatabaseService databaseService = DatabaseService();
+  @override
+  void initState() {
+    uid = FirebaseAuth.instance.currentUser!.uid;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            Checkbox(
-              focusColor: kColortext,
-              value: _isChecked,
-              onChanged: (bool? value) {
-                setState(() {
-                  _isChecked = value!;
-                });
-              },
+    return StreamBuilder<List<Todo>>(
+      stream: databaseService.todos,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          List<Todo> todos = snapshot.data!;
+          return ListView.builder(
+              itemCount: todos.length,
+              itemBuilder: (context, index) {
+                Todo tode = todos[index];
+                return Container(
+                  margin: EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Slidable(
+                      key: ValueKey(tode.id),
+                      // endActionPane:
+                      //     ActionPane(motion: DrawerMotion(), children: [
+                      //   SlidableAction(
+                      //     backgroundColor: kPrimaryColor,
+                      //     foregroundColor: Colors.white,
+                      //     icon: Icons.done,
+                      //     onPressed: (context) {
+          
+                      //     databaseService.updatestatustodo(tode.id, true);
+                      //   }),
+                      // ]),
+
+                      
+                      child: ListTile(
+                        title: Text(
+                          tode.title,
+                          style: TextStyle(fontWeight: FontWeight.w500),
+                        ),
+                      )),
+                );
+              });
+        } else {
+          return Center(
+            child: CircularProgressIndicator(
+              color: Colors.white,
             ),
-            Text(
-              widget.notes.text,
-              style: TextStyle(color: Colors.black),
-            ),
-          ],
-        ),
-        IconButton(
-          icon: Icon(
-            Icons.delete,
-            color: Color(0xff2EA8A1),
-          ),
-          onPressed: () {
-            print('Delete icon pressed');
-            // هنا يمكنك إضافة دالة لحذف العنصر من القائمة
-          },
-        ),
-      ],
+          );
+        }
+      },
     );
   }
 }

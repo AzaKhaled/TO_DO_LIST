@@ -2,11 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:to_do_list/widgets/Constant.dart';
 
 class CustomTextFiled extends StatefulWidget {
-  CustomTextFiled({this.hintText, this.onChanged, this.onSaved});
-  
+  CustomTextFiled({
+    this.hintText,
+    this.onChanged,
+    this.onSaved,
+    this.controller, // إضافة TextEditingController كخاصية اختيارية
+    this.validator, // إضافة خاصية validator
+  });
+
   final Function(String)? onChanged;
   final String? hintText;
-  final void Function(String?)? onSaved; // تعديل صغير هنا لجعلها نهائية
+  final void Function(String?)? onSaved;
+  final TextEditingController? controller; // الحقل الخاص بـ TextEditingController
+  final String? Function(String?)? validator; // الحقل الخاص بـ validator
 
   @override
   State<CustomTextFiled> createState() => _CustomTextFiledState();
@@ -20,13 +28,9 @@ class _CustomTextFiledState extends State<CustomTextFiled> {
     bool isPasswordField = widget.hintText == 'Enter password' || widget.hintText == 'Confirm password';
 
     return TextFormField(
-      onSaved: widget.onSaved, // تأكد من تمرير widget.onSaved هنا
-      validator: (data) {
-        if (data?.isEmpty ?? true) {
-          return 'Field is required';
-        }
-        return null;
-      },
+      controller: widget.controller, // تمرير الـ Controller إذا كان موجودًا
+      onSaved: widget.onSaved,
+      validator: widget.validator, // تمرير الـ Validator إذا كان موجودًا
       obscureText: isPasswordField ? isObscure : false,
       onChanged: widget.onChanged,
       decoration: InputDecoration(

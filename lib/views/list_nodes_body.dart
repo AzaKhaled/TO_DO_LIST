@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:to_do_list/cubit/cubit/notes_cubit.dart';
-import 'package:to_do_list/models/note_model.dart';
+import 'package:to_do_list/model/todo_model.dart';
+import 'package:to_do_list/services/database_service.dart';
+
 import 'package:to_do_list/views/notes_iteams.dart';
 import 'package:to_do_list/widgets/Constant.dart';
-import 'package:to_do_list/widgets/add_buttom_sheet.dart'; // تأكد من استيراد الملف بشكل صحيح
+import 'package:to_do_list/widgets/add_buttom_sheet.dart';
+import 'package:to_do_list/widgets/show_task_dialog.dart';
 
 class ListNodesBody extends StatefulWidget {
   const ListNodesBody({super.key});
@@ -14,39 +16,30 @@ class ListNodesBody extends StatefulWidget {
 }
 
 class _ListNodesBodyState extends State<ListNodesBody> {
-  bool _isChecked = false; // متغير لتخزين حالة الـ Checkbox
-
- 
-
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => NotesCubit(),
+    return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset:
-            true, // التأكد من تجنب تغطية المحتوى بالكيبورد
+        resizeToAvoidBottomInset: true,
         body: Card(
-          elevation: 4.0, // تعيين الارتفاع لإضافة ظل
-          shadowColor: Colors.grey, // لون الظل
+          elevation: 4.0,
+          shadowColor: Colors.grey,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0), // شكل الحواف المستديرة
+            borderRadius: BorderRadius.circular(8.0),
           ),
           child: Container(
             margin: EdgeInsets.only(left: 5),
-            width: 380,
-            height: 380, // تأكد من تحديد ارتفاع مناسب
+            width: MediaQuery.of(context).size.width * 0.9, // عرض مرن
+            height: 380,
             decoration: BoxDecoration(
-              color: Colors.white, // تغيير لون الـ Container إلى الأبيض
+              color: Colors.white,
               borderRadius: BorderRadius.circular(8.0),
             ),
             child: Column(
-              // استخدمنا Column لعرض العناصر عموديًا
-              crossAxisAlignment:
-                  CrossAxisAlignment.start, // محاذاة العناصر لليسار
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(
-                      top: 18, left: 20), // إضافة Padding للنص
+                  padding: const EdgeInsets.only(top: 18, left: 20),
                   child: Row(
                     children: [
                       Text(
@@ -64,27 +57,13 @@ class _ListNodesBodyState extends State<ListNodesBody> {
                           color: Colors.white,
                           border: Border.all(color: kPrimaryColor, width: 2.0),
                         ),
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: IconButton(
-                            onPressed: () {
-                              // عند الضغط على الأيقونة، نعرض الـ BottomSheet
-                              showModalBottomSheet(
-                                context: context,
-                                isScrollControlled:
-                                    true, // يجعل الـ BottomSheet قابل للتمرير
-                                builder: (BuildContext context) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(top: 50),
-                                    child: ShowTaskButtomSheet(),
-                                  );
-                                },
-                              );
-                            },
-                            icon: Icon(
-                              Icons.add,
-                              color: kPrimaryColor,
-                            ),
+                        child: IconButton(
+                          onPressed: () {
+                            showTaskDialog(context);
+                          },
+                          icon: Icon(
+                            Icons.add,
+                            color: kPrimaryColor,
                           ),
                         ),
                       ),
@@ -92,20 +71,7 @@ class _ListNodesBodyState extends State<ListNodesBody> {
                   ),
                 ),
                 Expanded(
-                  // استخدمنا Expanded لجعل ListView يتمدد بشكل صحيح
-                  child: BlocBuilder<NotesCubit, NotesState>(
-                    builder: (context, state) {
-                      List<NoteModel> notes =
-                          BlocProvider.of <NotesCubit>(context).notes ?? [];
-                      return ListView.builder(
-                        itemCount: notes.length, // عدد المهام
-                        itemBuilder: (context, index) {
-                          return NotesIteams(notes: notes[index]);
-
-                        },
-                      );
-                    },
-                  ),
+                  child: NotesIteams(),
                 ),
               ],
             ),
@@ -114,4 +80,6 @@ class _ListNodesBodyState extends State<ListNodesBody> {
       ),
     );
   }
+
+ 
 }

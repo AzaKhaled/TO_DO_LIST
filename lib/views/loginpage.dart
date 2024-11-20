@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:to_do_list/hlper/show_snak_par.dart';
+import 'package:to_do_list/services/auth_service.dart';
 import 'package:to_do_list/views/list_notes.dart';
 import 'package:to_do_list/views/registerpage.dart';
 import 'package:to_do_list/widgets/Constant.dart';
@@ -18,7 +19,10 @@ class _LoginpageState extends State<Loginpage> {
   String? email;
   String? password;
   bool isLoading = false;
-  GlobalKey<FormState> formkey = GlobalKey();
+  final GlobalKey<FormState> formKey = GlobalKey();
+  final AuthService auth = AuthService();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,7 @@ class _LoginpageState extends State<Loginpage> {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         body: Form(
-          key: formkey,
+          key: formKey,
           child: SingleChildScrollView(
             child: Container(
               height: MediaQuery.of(context).size.height,
@@ -78,16 +82,30 @@ class _LoginpageState extends State<Loginpage> {
                           Image.asset('assets/pag2.PNG'),
                           SizedBox(height: 30),
                           CustomTextFiled(
+                            controller: emailController,
                             hintText: 'Enter your email',
-                            onChanged: (data) {
-                              email = data;
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Email is required';
+                              }
+                              if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                                return 'Enter a valid email';
+                              }
+                              return null;
                             },
                           ),
                           SizedBox(height: 10),
                           CustomTextFiled(
+                            controller: passwordController,
                             hintText: 'Enter password',
-                            onChanged: (data) {
-                              password = data;
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Password is required';
+                              }
+                              if (value.length < 6) {
+                                return 'Password must be at least 6 characters';
+                              }
+                              return null;
                             },
                           ),
                           SizedBox(height: 30),
@@ -104,29 +122,50 @@ class _LoginpageState extends State<Loginpage> {
                         margin: EdgeInsets.symmetric(horizontal: 20),
                         child: ElevatedButton(
                           onPressed: () async {
-                            if (formkey.currentState!.validate()) {
-                              setState(() {
-                                isLoading = true;
-                              });
-                              try {
-                                await login();
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ListNotes()),
-                                );
-                              } on FirebaseAuthException catch (e) {
-                                if (e.code == 'invalid-credential') {
-                                  showsnackbar(context, 'invalid Email or password');
-                                } 
-                                print(e.toString());
-                              } finally {
-                                setState(() {
-                                  isLoading = false;
-                                });
-                              }
-                            }
-                          },
+  if (formKey.currentState!.validate()) {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      User? user = await auth.loginwithEmailAndPassword(
+        emailController.text,
+        passwordController.text,
+      );
+      if (user != null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ListNotes(),
+          ),
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      String errorMessage = 'An error occurred.';
+
+      if (e.code == 'user-not-found') {
+        errorMessage = 'No user found with this email.';
+      } else if (e.code == 'wrong-password') {
+        errorMessage = 'Incorrect password. Please try again.';
+      } else if (e.code == 'invalid-email') {
+        errorMessage = 'Invalid email format.';
+      } else if (e.code == 'user-disabled') {
+        errorMessage = 'This user account has been disabled.';
+      }
+
+      // إظهار رسالة الخطأ باستخدام Snackbar
+      showsnackbar(context, errorMessage);
+    } catch (e) {
+      // التعامل مع الأخطاء العامة
+      showsnackbar(context, 'Something went wrong. Please try again.');
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+},
+
                           style: ElevatedButton.styleFrom(
                             backgroundColor: kPrimaryColor,
                             shape: RoundedRectangleBorder(
@@ -158,7 +197,8 @@ class _LoginpageState extends State<Loginpage> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Registerpage()),
+                                  builder: (context) => Registerpage(),
+                                ),
                               );
                             },
                             child: Text(
@@ -176,13 +216,6 @@ class _LoginpageState extends State<Loginpage> {
           ),
         ),
       ),
-    );
-  }
-
-  Future<void> login() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: email!,
-      password: password!,
     );
   }
 }

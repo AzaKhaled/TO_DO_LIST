@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:to_do_list/hlper/show_snak_par.dart';
+import 'package:to_do_list/services/auth_service.dart';
 import 'package:to_do_list/views/list_notes.dart';
 import 'package:to_do_list/views/loginpage.dart';
 import 'package:to_do_list/widgets/Constant.dart';
@@ -15,17 +16,16 @@ class Registerpage extends StatefulWidget {
 }
 
 class _RegisterpageState extends State<Registerpage> {
-  String? email;
-
-  String? password;
-
-  String? confirmPassword;
-
-  String? name;
-
   bool isLoding = false;
 
-  GlobalKey<FormState> formkey = GlobalKey();
+  final GlobalKey<FormState> formkey = GlobalKey();
+  final AuthService auth = AuthService();
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+  final TextEditingController nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,85 +43,85 @@ class _RegisterpageState extends State<Registerpage> {
                 child: Stack(
                   children: [
                     Positioned(
-                      top: -50,
-                      left: -50,
-                      child: Container(
-                        width: 190,
-                        height: 190,
-                        decoration: BoxDecoration(
-                          color: kColortext.withOpacity(0.7),
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: -100,
-                      left: 50,
-                      child: Container(
-                        width: 190,
-                        height: 190,
-                        decoration: BoxDecoration(
-                          color: kColortext.withOpacity(0.7),
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                    ),
-                    Positioned(
                       top: 150,
                       left: 20,
                       right: 20,
                       child: Column(
                         children: [
                           Text(
-                            'Welcom onboard!',
+                            'Welcome onboard!',
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
                           ),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Text(
-                              'lets help you meet up your tasks.',
+                            child: const Text(
+                              'Let\'s help you meet up your tasks.',
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.black,
                               ),
                             ),
                           ),
-                          SizedBox(height: 30),
+                          const SizedBox(height: 30),
                           CustomTextFiled(
-                            hintText: 'enter your full name',
-                            onChanged: (data) {
-                              name = data;
+                            controller: nameController,
+                            hintText: 'Enter your full name',
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Name is required';
+                              }
+                              return null;
                             },
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           CustomTextFiled(
-                            onChanged: (data) {
-                              email = data;
+                            controller: emailController,
+                            hintText: 'Enter your email',
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Email is required';
+                              }
+                              if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                                return 'Enter a valid email';
+                              }
+                              return null;
                             },
-                            hintText: 'enter your email',
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           CustomTextFiled(
-                            onChanged: (data) {
-                              password = data;
-                            },
+                            controller: passwordController,
                             hintText: 'Enter password',
-                          ),
-                          SizedBox(height: 10),
-                          CustomTextFiled(
-                            onChanged: (data) {
-                              confirmPassword = data;
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Password is required';
+                              }
+                              if (value.length < 6) {
+                                return 'Password must be at least 6 characters';
+                              }
+                              return null;
                             },
-                            hintText: 'Confirm password',
-                            
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 10),
+                          CustomTextFiled(
+                            controller: confirmPasswordController,
+                            hintText: 'Confirm password',
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please confirm your password';
+                              }
+                              if (value != passwordController.text) {
+                                return 'Passwords do not match';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 20),
                         ],
                       ),
                     ),
@@ -132,43 +132,35 @@ class _RegisterpageState extends State<Registerpage> {
                       child: Container(
                         height: 60,
                         width: 400,
-                        margin: EdgeInsets.symmetric(horizontal: 20),
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
                         child: ElevatedButton(
                           onPressed: () async {
-                            if (password != confirmPassword) {
-                              showsnackbar(context, 'Passwords do not match');
-                              return;
-                            }
-
                             if (formkey.currentState!.validate()) {
-                              isLoding = true;
                               setState(() {
-                                
+                                isLoding = true;
                               });
-                              try {
-                                await registeration();
 
-                                // إذا تم إنشاء الحساب بنجاح، يتم الانتقال إلى الصفحة الجديدة
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ListNotes()),
+                              try {
+                                User? user = await auth.registerwithEmailAndPassword(
+                                  emailController.text,
+                                  passwordController.text,
                                 );
-                              } on FirebaseAuthException catch (e) {
-                                // التعامل مع الاستثناءات
-                                if (e.code == 'weak-password') {
-                                  showsnackbar(context, 'Weak Password');
-                                } else if (e.code == 'email-already-in-use') {
-                                  showsnackbar(context,
-                                      'Email already in use, try another email!');
-                                } else {
-                                  showsnackbar(context, 'Success');
+
+                                if (user != null) {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ListNotes(),
+                                    ),
+                                  );
                                 }
+                              } catch (error) {
+                                showsnackbar(context, error.toString());
+                              } finally {
+                                setState(() {
+                                  isLoding = false;
+                                });
                               }
-                              isLoding = false;
-                              setState(() {
-                                
-                              });
                             }
                           },
                           style: ElevatedButton.styleFrom(
@@ -177,7 +169,7 @@ class _RegisterpageState extends State<Registerpage> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                          child: Text(
+                          child: const Text(
                             'Register',
                             style: TextStyle(
                               color: Colors.white,
@@ -189,12 +181,12 @@ class _RegisterpageState extends State<Registerpage> {
                     ),
                     Positioned(
                       bottom: 10,
-                      left: 60,
+                      left: 100,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            'Already Have An Account?',
+                          const Text(
+                            'Do you have an account?',
                             style: TextStyle(color: Colors.black),
                           ),
                           GestureDetector(
@@ -206,13 +198,13 @@ class _RegisterpageState extends State<Registerpage> {
                               );
                             },
                             child: Text(
-                              '  Sign In',
+                              ' Sign In',
                               style: TextStyle(color: kPrimaryColor),
                             ),
                           ),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -222,11 +214,4 @@ class _RegisterpageState extends State<Registerpage> {
       ),
     );
   }
-
-  Future<void> registeration() async {
-    UserCredential user = await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(email: email!, password: password!);
-  }
-
- 
 }
