@@ -9,21 +9,22 @@ class AnalogClockDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(image: AssetImage('assets/dial01.webp')),
-      ),
-      child: Center( // استخدام Center لوضع الساعة في منتصف الشاشة
+      // decoration: const BoxDecoration(
+      //   image: DecorationImage(image: AssetImage('assets/dial01.webp')),
+      // ),
+      child: Center(
         child: Container(
-          width: 200, // تحديد العرض الكبير للـ Container (أكبر بـ 2 سم من حجم الساعة)
-          height: 200, // تحديد الارتفاع الكبير للـ Container
+          width:
+              200, 
+          height: 200, 
           decoration: BoxDecoration(
-            color: Colors.white, // لون الخلفية للكارد
-            borderRadius: BorderRadius.circular(100), // لتحديد الزوايا الدائرية
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(100), 
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.3), // لون الظل
-                blurRadius: 10, // مدى ضبابية الظل
-                offset: Offset(-5, 5), // الظل في أسفل يسار فقط
+                color: Colors.black.withOpacity(0.3), 
+                blurRadius: 10, 
+                offset: const Offset(-5, 5), 
               ),
             ],
           ),
@@ -31,16 +32,19 @@ class AnalogClockDemo extends StatelessWidget {
             child: AnalogClock(
               dateTime: DateTime.now(),
               isKeepTime: true,
-              dialColor: Colors.white, // تغيير لون قرص الساعة
-              hourNumberColor: kPrimaryColor, // تغيير لون الأرقام
-              centerPointColor: kPrimaryColor, // تغيير لون النقطة في المركز
-              markingColor: Colors.white, // تغيير لون النقاط الصغيرة إلى اللون الأبيض
-              hourNumbers: [
-                '12', '', '', '3', '', '', '6', '', '', '9', '', '', // وضع الأرقام 12، 3، 6، 9 فقط
+              dialColor: Colors.white, 
+              hourNumberColor: kPrimaryColor, 
+              centerPointColor: kPrimaryColor, 
+              markingColor:
+                  Colors.white, 
+              hourNumbers: const [
+                '12', '', '', '3', '', '', '6', '', '', '9', '',
+                '', // وضع الأرقام 12، 3، 6، 9 فقط
               ],
-              hourHandColor: kPrimaryColor, // تغيير لون عقرب الساعة
-              minuteHandColor: kPrimaryColor, // تغيير لون عقرب الدقائق
-              secondHandColor:  Color.fromARGB(255, 191, 138, 138), // تغيير لون عقرب الثواني
+              hourHandColor: kPrimaryColor, 
+              minuteHandColor: kPrimaryColor, 
+              secondHandColor: const Color.fromARGB(
+                  255, 191, 138, 138), 
               child: const Align(
                 alignment: FractionalOffset(0.5, 0.75),
               ),

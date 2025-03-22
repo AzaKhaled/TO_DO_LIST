@@ -28,15 +28,14 @@ class _AddNoteFormState extends State<AddNoteForm> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          SizedBox(height: 80),
+          const SizedBox(height: 80),
           CustomTextFiled(
             onSaved: (value) {
               text = value;
-             
             },
             hintText: 'Enter your task',
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           CustomButton(
             onTap: () {
               if (formkey.currentState!.validate()) {

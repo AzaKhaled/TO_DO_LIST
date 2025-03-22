@@ -51,8 +51,8 @@ class HomePage extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 70),
                       child: Image.asset('assets/imgs/pag1.PNG'),
                     ),
-                    SizedBox(height: 70),
-                    Text(
+                    const SizedBox(height: 70),
+                    const Text(
                       'Get Things Done With TODO',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -61,9 +61,9 @@ class HomePage extends StatelessWidget {
                         color: Colors.black,
                       ),
                     ),
-                    SizedBox(height: 30),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                    const SizedBox(height: 30),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
                         'Ut enim ad minima veniam,quis\n'
                         'nostrum exercitationem ullam\n'
@@ -75,18 +75,18 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     Container(
                       height: 50,
                       width: double.infinity,
-                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
                       child: ElevatedButton(
                         onPressed: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>Registerpage()));
-                         // Navigator.pushNamed(context, 'LoginPage');
+                                  builder: (context) => Registerpage()));
+                          // Navigator.pushNamed(context, 'LoginPage');
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: kPrimaryColor,
@@ -94,7 +94,7 @@ class HomePage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           'Get Started',
                           style: TextStyle(
                             color: Colors.white,
@@ -103,7 +103,7 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 50),
+                    const SizedBox(height: 50),
                   ],
                 ),
               ),

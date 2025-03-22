@@ -49,12 +49,12 @@ class ShowTaskButtomSheet extends StatelessWidget {
                   children: [
                     Container(
                       height: 300,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: kPrimarybacground,
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: const SingleChildScrollView(child: AddNoteForm()),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: SingleChildScrollView(child: AddNoteForm()),
                       ),
                     ),
                   ],

@@ -9,7 +9,7 @@ import 'package:to_do_list/widgets/Constant.dart';
 import 'package:to_do_list/widgets/custom_text_filed.dart';
 
 class Registerpage extends StatefulWidget {
-  Registerpage({super.key});
+  const Registerpage({super.key});
 
   @override
   State<Registerpage> createState() => _RegisterpageState();
@@ -48,19 +48,19 @@ class _RegisterpageState extends State<Registerpage> {
                       right: 20,
                       child: Column(
                         children: [
-                          Text(
+                          const Text(
                             'Welcome onboard!',
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
                           ),
                           const SizedBox(height: 15),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: const Text(
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Text(
                               'Let\'s help you meet up your tasks.',
                               style: TextStyle(
                                 fontSize: 16,
@@ -87,7 +87,8 @@ class _RegisterpageState extends State<Registerpage> {
                               if (value == null || value.isEmpty) {
                                 return 'Email is required';
                               }
-                              if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                              if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                                  .hasMatch(value)) {
                                 return 'Enter a valid email';
                               }
                               return null;
@@ -141,7 +142,8 @@ class _RegisterpageState extends State<Registerpage> {
                               });
 
                               try {
-                                User? user = await auth.registerwithEmailAndPassword(
+                                User? user =
+                                    await auth.registerwithEmailAndPassword(
                                   emailController.text,
                                   passwordController.text,
                                 );
@@ -150,7 +152,7 @@ class _RegisterpageState extends State<Registerpage> {
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => ListNotes(),
+                                      builder: (context) => const ListNotes(),
                                     ),
                                   );
                                 }
@@ -181,7 +183,7 @@ class _RegisterpageState extends State<Registerpage> {
                     ),
                     Positioned(
                       bottom: 10,
-                      left: 100,
+                      left: 80,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -197,7 +199,7 @@ class _RegisterpageState extends State<Registerpage> {
                                     builder: (context) => Loginpage()),
                               );
                             },
-                            child: Text(
+                            child: const Text(
                               ' Sign In',
                               style: TextStyle(color: kPrimaryColor),
                             ),

@@ -3,5 +3,8 @@ class Todo {
   final String title;
   final bool completed;
 
-  Todo( {required this.id, required this.title, required this.completed});
+  Todo({required this.id, required this.title, required this.completed});
+
+  // تعديل الخاصية isCompleted
+  bool get isCompleted => completed;
 }

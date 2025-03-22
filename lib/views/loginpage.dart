@@ -1,3 +1,4 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -9,7 +10,7 @@ import 'package:to_do_list/widgets/Constant.dart';
 import 'package:to_do_list/widgets/custom_text_filed.dart';
 
 class Loginpage extends StatefulWidget {
-  Loginpage({super.key});
+  const Loginpage({super.key});
 
   @override
   State<Loginpage> createState() => _LoginpageState();
@@ -69,7 +70,7 @@ class _LoginpageState extends State<Loginpage> {
                       right: 20,
                       child: Column(
                         children: [
-                          Text(
+                          const Text(
                             'Welcome back!',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -78,9 +79,9 @@ class _LoginpageState extends State<Loginpage> {
                               color: Colors.black,
                             ),
                           ),
-                          SizedBox(height: 25),
+                          const SizedBox(height: 25),
                           Image.asset('assets/pag2.PNG'),
-                          SizedBox(height: 30),
+                          const SizedBox(height: 30),
                           CustomTextFiled(
                             controller: emailController,
                             hintText: 'Enter your email',
@@ -88,13 +89,14 @@ class _LoginpageState extends State<Loginpage> {
                               if (value == null || value.isEmpty) {
                                 return 'Email is required';
                               }
-                              if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                              if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                                  .hasMatch(value)) {
                                 return 'Enter a valid email';
                               }
                               return null;
                             },
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           CustomTextFiled(
                             controller: passwordController,
                             hintText: 'Enter password',
@@ -108,7 +110,7 @@ class _LoginpageState extends State<Loginpage> {
                               return null;
                             },
                           ),
-                          SizedBox(height: 30),
+                          const SizedBox(height: 30),
                         ],
                       ),
                     ),
@@ -119,60 +121,62 @@ class _LoginpageState extends State<Loginpage> {
                       child: Container(
                         height: 60,
                         width: 400,
-                        margin: EdgeInsets.symmetric(horizontal: 20),
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
                         child: ElevatedButton(
                           onPressed: () async {
-  if (formKey.currentState!.validate()) {
-    setState(() {
-      isLoading = true;
-    });
+                            if (formKey.currentState!.validate()) {
+                              setState(() {
+                                isLoading = true;
+                              });
 
-    try {
-      User? user = await auth.loginwithEmailAndPassword(
-        emailController.text,
-        passwordController.text,
-      );
-      if (user != null) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ListNotes(),
-          ),
-        );
-      }
-    } on FirebaseAuthException catch (e) {
-      String errorMessage = 'An error occurred.';
+                              try {
+                                User? user =
+                                    await auth.loginwithEmailAndPassword(
+                                  emailController.text,
+                                  passwordController.text,
+                                );
+                                if (user != null) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const ListNotes(),
+                                    ),
+                                  );
+                                }
+                              } on FirebaseAuthException catch (e) {
+                                String errorMessage = 'An error occurred.';
 
-      if (e.code == 'user-not-found') {
-        errorMessage = 'No user found with this email.';
-      } else if (e.code == 'wrong-password') {
-        errorMessage = 'Incorrect password. Please try again.';
-      } else if (e.code == 'invalid-email') {
-        errorMessage = 'Invalid email format.';
-      } else if (e.code == 'user-disabled') {
-        errorMessage = 'This user account has been disabled.';
-      }
+                                if (e.code == 'user-not-found') {
+                                  errorMessage =
+                                      'No user found with this email.';
+                                } else if (e.code == 'wrong-password') {
+                                  errorMessage =
+                                      'Incorrect password. Please try again.';
+                                } else if (e.code == 'invalid-email') {
+                                  errorMessage = 'Invalid email format.';
+                                } else if (e.code == 'user-disabled') {
+                                  errorMessage =
+                                      'This user account has been disabled.';
+                                }
 
-      // إظهار رسالة الخطأ باستخدام Snackbar
-      showsnackbar(context, errorMessage);
-    } catch (e) {
-      // التعامل مع الأخطاء العامة
-      showsnackbar(context, 'Something went wrong. Please try again.');
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
-},
-
+                                showsnackbar(context, errorMessage);
+                              } catch (e) {
+                                showsnackbar(context,
+                                    'Something went wrong. Please try again.');
+                              } finally {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                              }
+                            }
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: kPrimaryColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                          child: Text(
+                          child: const Text(
                             'Sign In',
                             style: TextStyle(
                               color: Colors.white,
@@ -188,7 +192,7 @@ class _LoginpageState extends State<Loginpage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             'Don\'t have an account?',
                             style: TextStyle(color: Colors.black),
                           ),
@@ -201,7 +205,7 @@ class _LoginpageState extends State<Loginpage> {
                                 ),
                               );
                             },
-                            child: Text(
+                            child: const Text(
                               ' Sign Up',
                               style: TextStyle(color: kPrimaryColor),
                             ),
