@@ -1,3 +1,4 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -158,10 +159,8 @@ class _LoginpageState extends State<Loginpage> {
                                       'This user account has been disabled.';
                                 }
 
-                                // إظهار رسالة الخطأ باستخدام Snackbar
                                 showsnackbar(context, errorMessage);
                               } catch (e) {
-                                // التعامل مع الأخطاء العامة
                                 showsnackbar(context,
                                     'Something went wrong. Please try again.');
                               } finally {

@@ -8,14 +8,12 @@ class Cheackedboxed extends StatefulWidget {
 }
 
 class _MyAppState extends State<Cheackedboxed> {
-  bool _isChecked = false; // متغير لتخزين حالة الـ Checkbox
-
+  bool _isChecked = false; 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: CheckboxListTile(
-          // title: Text('هل أنت موافق؟'),
           value: _isChecked,
           onChanged: (bool? value) {
             setState(() {

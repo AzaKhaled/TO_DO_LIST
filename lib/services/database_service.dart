@@ -6,7 +6,7 @@ class DatabaseService {
   final CollectionReference todoCollection =
       FirebaseFirestore.instance.collection("todos");
   User? user = FirebaseAuth.instance.currentUser;
-// add task
+
   Future<DocumentReference> addTodoItem(String title) async {
     return await todoCollection.add({
       'uid': user!.uid,
@@ -15,31 +15,35 @@ class DatabaseService {
     });
   }
 
-  //update todo tasks
   Future<void> updatetodo(String id, String title) async {
-    final updatetoCollection =
+    final updateToCollection =
         FirebaseFirestore.instance.collection("todos").doc(id);
-    return await updatetoCollection.update({
+    await updateToCollection.update({
       'title': title,
     });
   }
 
   Future<void> updatestatustodo(String id, bool completed) async {
-  print(" update item : $id to $completed");
-  await FirebaseFirestore.instance.collection("todos").doc(id).update({
-    'completed': completed,
-  });
-}
+    print("تحديث حالة المهمة: $id إلى $completed");
+    await FirebaseFirestore.instance.collection("todos").doc(id).update({
+      'completed': completed,
+    });
+  }
 
-Future<void> delettodotask(String id) async {
-  print("delet item $id");
-  await FirebaseFirestore.instance.collection("todos").doc(id).delete();
-}
+  Future<void> delettodotask(String id) async {
+    print("حذف المهمة: $id");
+    await FirebaseFirestore.instance.collection("todos").doc(id).delete();
+  }
 
-
-
-//get pending tasks
   Stream<List<Todo>> get todos {
+    return todoCollection
+        .where('uid', isEqualTo: user!.uid)
+        .snapshots()
+        .map(todoListFromSnapshot);
+  }
+
+  // جلب المهام غير المكتملة فقط
+  Stream<List<Todo>> get pendingTodos {
     return todoCollection
         .where('uid', isEqualTo: user!.uid)
         .where('completed', isEqualTo: false)
@@ -47,8 +51,7 @@ Future<void> delettodotask(String id) async {
         .map(todoListFromSnapshot);
   }
 
-//get completed tasks
-  Stream<List<Todo>> get completedtodos {
+  Stream<List<Todo>> get completedTodos {
     return todoCollection
         .where('uid', isEqualTo: user!.uid)
         .where('completed', isEqualTo: true)
@@ -59,9 +62,10 @@ Future<void> delettodotask(String id) async {
   List<Todo> todoListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return Todo(
-          completed: doc['completed'] ?? false,
-          id: doc.id,
-          title: doc['title'] ?? '');
+        id: doc.id,
+        title: doc['title'] ?? '',
+        completed: doc['completed'] ?? false,
+      );
     }).toList();
   }
 }

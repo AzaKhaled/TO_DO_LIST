@@ -183,7 +183,7 @@ class _RegisterpageState extends State<Registerpage> {
                     ),
                     Positioned(
                       bottom: 10,
-                      left: 100,
+                      left: 80,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

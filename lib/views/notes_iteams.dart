@@ -63,7 +63,6 @@ class _NotesIteamsState extends State<NotesIteams> {
                 leading: Checkbox(
                   value: todo.isCompleted,
                   onChanged: (bool? value) {
-                    // نعدل حالة المهمة فقط بدون حذف
                     setState(() {
                       databaseService.updatestatustodo(todo.id, value ?? false);
                       print("update   : ${todo.title} to ${value}");

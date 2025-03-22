@@ -13,8 +13,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  final FirebaseAuth auth = FirebaseAuth.instance; // تعريف auth هنا
-  runApp(ToDoList(auth: auth)); // تمرير auth إلى التطبيق
+  final FirebaseAuth auth = FirebaseAuth.instance; 
+  runApp(ToDoList(auth: auth)); 
 }
 
 class ToDoList extends StatelessWidget {

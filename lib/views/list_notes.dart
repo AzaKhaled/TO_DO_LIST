@@ -12,7 +12,7 @@ class ListNotes extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset:
-          true, // التأكد من أن الـ Scaffold يتفاعل مع الكيبورد
+          true, 
       body: Column(
         children: [
           Stack(
@@ -118,7 +118,7 @@ class ListNotes extends StatelessWidget {
           ),
           const Expanded(
             child: ListNodesBody(),
-          ), // تضمين ListNodesBody في الجزء المتبقي
+          ), 
         ],
       ),
     );

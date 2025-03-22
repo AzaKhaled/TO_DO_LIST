@@ -7,16 +7,16 @@ class CustomTextFiled extends StatefulWidget {
     this.hintText,
     this.onChanged,
     this.onSaved,
-    this.controller, // إضافة TextEditingController كخاصية اختيارية
-    this.validator, // إضافة خاصية validator
+    this.controller, 
+    this.validator, 
   });
 
   final Function(String)? onChanged;
   final String? hintText;
   final void Function(String?)? onSaved;
   final TextEditingController?
-      controller; // الحقل الخاص بـ TextEditingController
-  final String? Function(String?)? validator; // الحقل الخاص بـ validator
+      controller; 
+  final String? Function(String?)? validator; 
 
   @override
   State<CustomTextFiled> createState() => _CustomTextFiledState();
@@ -31,9 +31,9 @@ class _CustomTextFiledState extends State<CustomTextFiled> {
         widget.hintText == 'Confirm password';
 
     return TextFormField(
-      controller: widget.controller, // تمرير الـ Controller إذا كان موجودًا
+      controller: widget.controller, 
       onSaved: widget.onSaved,
-      validator: widget.validator, // تمرير الـ Validator إذا كان موجودًا
+      validator: widget.validator, 
       obscureText: isPasswordField ? isObscure : false,
       onChanged: widget.onChanged,
       decoration: InputDecoration(
