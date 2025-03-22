@@ -25,20 +25,18 @@ class DatabaseService {
   }
 
   Future<void> updatestatustodo(String id, bool completed) async {
-    final updatetoCollection =
-        FirebaseFirestore.instance.collection("todos").doc(id);
-    return await updatetoCollection.update({
-      'completed': completed,
-    });
-  }
+  print(" update item : $id to $completed");
+  await FirebaseFirestore.instance.collection("todos").doc(id).update({
+    'completed': completed,
+  });
+}
 
-  // delet todo
-  Future<void> delettodotask(
-    String id,
-  ) async {
-    final updatetoCollection =
-        FirebaseFirestore.instance.collection("todos").doc(id).delete();
-  }
+Future<void> delettodotask(String id) async {
+  print("delet item $id");
+  await FirebaseFirestore.instance.collection("todos").doc(id).delete();
+}
+
+
 
 //get pending tasks
   Stream<List<Todo>> get todos {

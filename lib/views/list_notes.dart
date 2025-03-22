@@ -11,7 +11,8 @@ class ListNotes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true, // التأكد من أن الـ Scaffold يتفاعل مع الكيبورد
+      resizeToAvoidBottomInset:
+          true, // التأكد من أن الـ Scaffold يتفاعل مع الكيبورد
       body: Column(
         children: [
           Stack(
@@ -19,7 +20,7 @@ class ListNotes extends StatelessWidget {
               Container(
                 height: 300, // يأخذ ثلث ارتفاع الشاشة
                 width: double.infinity,
-                color: Color(0xff2EA8A1),
+                color: const Color(0xff2EA8A1),
                 child: Center(
                   child: Stack(
                     children: [
@@ -59,8 +60,8 @@ class ListNotes extends StatelessWidget {
                                 fit: BoxFit.cover,
                               ),
                             ),
-                            SizedBox(height: 10),
-                            Text(
+                            const SizedBox(height: 10),
+                            const Text(
                               'Welcome Olivia Grace',
                               style: TextStyle(
                                 fontSize: 18,
@@ -68,7 +69,7 @@ class ListNotes extends StatelessWidget {
                                 color: Colors.white,
                               ),
                             ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                           ],
                         ),
                       ),
@@ -78,12 +79,12 @@ class ListNotes extends StatelessWidget {
               ),
               Positioned(
                 top: 40,
-                right: 20, 
+                right: 20,
                 child: IconButton(
                   onPressed: () {
-                    Navigator.pop(context); 
+                    Navigator.pop(context);
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_back_ios,
                     color: Colors.white,
                     size: 24,
@@ -92,8 +93,8 @@ class ListNotes extends StatelessWidget {
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
+          const Padding(
+            padding: EdgeInsets.only(top: 10),
             child: Center(
               child: SizedBox(
                 width: 100,
@@ -102,8 +103,8 @@ class ListNotes extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20, bottom: 20, left: 20),
+          const Padding(
+            padding: EdgeInsets.only(top: 20, bottom: 20, left: 20),
             child: Align(
               alignment: Alignment.bottomLeft,
               child: Text(
@@ -115,7 +116,7 @@ class ListNotes extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
+          const Expanded(
             child: ListNodesBody(),
           ), // تضمين ListNodesBody في الجزء المتبقي
         ],

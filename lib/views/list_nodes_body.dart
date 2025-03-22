@@ -28,7 +28,7 @@ class _ListNodesBodyState extends State<ListNodesBody> {
             borderRadius: BorderRadius.circular(8.0),
           ),
           child: Container(
-            margin: EdgeInsets.only(left: 5),
+            margin: const EdgeInsets.only(left: 5),
             width: MediaQuery.of(context).size.width * 0.9, // عرض مرن
             height: 380,
             decoration: BoxDecoration(
@@ -42,14 +42,14 @@ class _ListNodesBodyState extends State<ListNodesBody> {
                   padding: const EdgeInsets.only(top: 18, left: 20),
                   child: Row(
                     children: [
-                      Text(
+                      const Text(
                         'Daily Tasks',
                         style: TextStyle(
                             color: Colors.black, fontWeight: FontWeight.bold),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Container(
-                        margin: EdgeInsets.only(right: 5),
+                        margin: const EdgeInsets.only(right: 5),
                         width: 40.0,
                         height: 40.0,
                         decoration: BoxDecoration(
@@ -61,7 +61,7 @@ class _ListNodesBodyState extends State<ListNodesBody> {
                           onPressed: () {
                             showTaskDialog(context);
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.add,
                             color: kPrimaryColor,
                           ),
@@ -70,7 +70,7 @@ class _ListNodesBodyState extends State<ListNodesBody> {
                     ],
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   child: NotesIteams(),
                 ),
               ],
@@ -80,6 +80,4 @@ class _ListNodesBodyState extends State<ListNodesBody> {
       ),
     );
   }
-
- 
 }

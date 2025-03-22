@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Cheackedboxed extends StatefulWidget {
+  const Cheackedboxed({super.key});
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -11,10 +13,9 @@ class _MyAppState extends State<Cheackedboxed> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: Center(
         child: CheckboxListTile(
-         // title: Text('هل أنت موافق؟'),
+          // title: Text('هل أنت موافق؟'),
           value: _isChecked,
           onChanged: (bool? value) {
             setState(() {

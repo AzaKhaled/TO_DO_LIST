@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:to_do_list/widgets/Constant.dart';
 
 class CustomTextFiled extends StatefulWidget {
-  CustomTextFiled({
+  const CustomTextFiled({
+    super.key,
     this.hintText,
     this.onChanged,
     this.onSaved,
@@ -13,7 +14,8 @@ class CustomTextFiled extends StatefulWidget {
   final Function(String)? onChanged;
   final String? hintText;
   final void Function(String?)? onSaved;
-  final TextEditingController? controller; // الحقل الخاص بـ TextEditingController
+  final TextEditingController?
+      controller; // الحقل الخاص بـ TextEditingController
   final String? Function(String?)? validator; // الحقل الخاص بـ validator
 
   @override
@@ -25,7 +27,8 @@ class _CustomTextFiledState extends State<CustomTextFiled> {
 
   @override
   Widget build(BuildContext context) {
-    bool isPasswordField = widget.hintText == 'Enter password' || widget.hintText == 'Confirm password';
+    bool isPasswordField = widget.hintText == 'Enter password' ||
+        widget.hintText == 'Confirm password';
 
     return TextFormField(
       controller: widget.controller, // تمرير الـ Controller إذا كان موجودًا
@@ -35,7 +38,7 @@ class _CustomTextFiledState extends State<CustomTextFiled> {
       onChanged: widget.onChanged,
       decoration: InputDecoration(
         hintText: widget.hintText,
-        hintStyle: TextStyle(color: Colors.black),
+        hintStyle: const TextStyle(color: Colors.black),
         suffixIcon: isPasswordField
             ? IconButton(
                 icon: Icon(
@@ -50,11 +53,11 @@ class _CustomTextFiledState extends State<CustomTextFiled> {
             : null,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide(color: kColortext, width: 3.0),
+          borderSide: const BorderSide(color: kColortext, width: 3.0),
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide(color: kColortext),
+          borderSide: const BorderSide(color: kColortext),
         ),
       ),
     );
