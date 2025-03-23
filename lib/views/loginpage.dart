@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -136,10 +135,13 @@ class _LoginpageState extends State<Loginpage> {
                                   passwordController.text,
                                 );
                                 if (user != null) {
+                                  String userName = user.displayName ?? "User";
+
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const ListNotes(),
+                                      builder: (context) =>
+                                          ListNotes(userName: userName),
                                     ),
                                   );
                                 }

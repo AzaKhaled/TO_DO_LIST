@@ -6,19 +6,20 @@ import 'package:to_do_list/widgets/Constant.dart';
 import 'package:to_do_list/widgets/custom_analog_clock.dart';
 
 class ListNotes extends StatelessWidget {
-  const ListNotes({super.key});
+  final String userName;
+
+  const ListNotes({super.key, required this.userName});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset:
-          true, 
+      resizeToAvoidBottomInset: true,
       body: Column(
         children: [
           Stack(
             children: [
               Container(
-                height: 300, // يأخذ ثلث ارتفاع الشاشة
+                height: 300,
                 width: double.infinity,
                 color: const Color(0xff2EA8A1),
                 child: Center(
@@ -61,9 +62,9 @@ class ListNotes extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 10),
-                            const Text(
-                              'Welcome Olivia Grace',
-                              style: TextStyle(
+                            Text(
+                              'Welcome $userName',
+                              style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
@@ -118,7 +119,7 @@ class ListNotes extends StatelessWidget {
           ),
           const Expanded(
             child: ListNodesBody(),
-          ), 
+          ),
         ],
       ),
     );
