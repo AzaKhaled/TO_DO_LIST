@@ -29,7 +29,7 @@ class _ListNodesBodyState extends State<ListNodesBody> {
           ),
           child: Container(
             margin: const EdgeInsets.only(left: 5),
-            width: MediaQuery.of(context).size.width * 0.9, 
+            width: MediaQuery.of(context).size.width * 0.9,
             height: 380,
             decoration: BoxDecoration(
               color: Colors.white,

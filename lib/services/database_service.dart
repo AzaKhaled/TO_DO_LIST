@@ -24,14 +24,14 @@ class DatabaseService {
   }
 
   Future<void> updatestatustodo(String id, bool completed) async {
-    print("تحديث حالة المهمة: $id إلى $completed");
+    print(" update taske: $id to $completed");
     await FirebaseFirestore.instance.collection("todos").doc(id).update({
       'completed': completed,
     });
   }
 
   Future<void> delettodotask(String id) async {
-    print("حذف المهمة: $id");
+    print("Delete task $id");
     await FirebaseFirestore.instance.collection("todos").doc(id).delete();
   }
 

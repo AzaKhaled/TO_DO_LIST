@@ -149,10 +149,14 @@ class _RegisterpageState extends State<Registerpage> {
                                 );
 
                                 if (user != null) {
+                                  await user
+                                      .updateDisplayName(nameController.text);
+
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const ListNotes(),
+                                      builder: (context) => ListNotes(
+                                          userName: nameController.text),
                                     ),
                                   );
                                 }
